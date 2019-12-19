@@ -16,7 +16,7 @@ public class DGraph implements graph{
 
 	@Override
 	public edge_data getEdge(int src, int dest) {
-		edge_data edge = new  EdgeData(src,dest);
+		edge_data edge = new  EdgeData(_graph.get(src),_graph.get(dest));
 		return edge;
 	}
 
@@ -27,7 +27,7 @@ public class DGraph implements graph{
 
 	@Override
 	public void connect(int src, int dest, double w) {
-		edge_data edge = new  EdgeData(src,dest,w);
+		edge_data edge = new  EdgeData(_graph.get(src),_graph.get(dest),w);
 
 	}
 

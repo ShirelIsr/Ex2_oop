@@ -2,20 +2,20 @@ package dataStructure;
 
 public class EdgeData implements edge_data{
 	
-	int src;
-	int dest;
+	node_data src;
+	node_data dest;
 	double weight;
 	int tag;
 	String info;
 	
-	public EdgeData(int src,int dest)
+	public EdgeData(node_data src,node_data dest)
 	{
 		this.src=src;
 		this.dest=dest;
 		this.weight=Double.MAX_VALUE;
 		tag=0;
 	}
-	public EdgeData(int src,int dest,double weight)
+	public EdgeData(node_data src,node_data dest,double weight)
 	{
 		this.src=src;
 		this.dest=dest;
@@ -25,12 +25,12 @@ public class EdgeData implements edge_data{
 
 	@Override
 	public int getSrc() {
-		return this.src;
+		return this.src.getKey();
 	}
 
 	@Override
 	public int getDest() {
-		return this.dest;
+		return this.dest.getKey();
 	}
 
 	@Override
