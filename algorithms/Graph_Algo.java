@@ -5,7 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+
+import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
 /**
@@ -73,9 +78,39 @@ public class Graph_Algo implements graph_algorithms{
 	}
 
 	@Override
-	public boolean isConnected() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isConnected() 
+	{
+		Collection<node_data> s = _graph.getV();
+		for (node_data node : s) 
+		{
+			initConnected();
+			if(_graph.edgeSize()!=numOfConected(node))
+				return false;	
+		}
+
+		return true;
+	}
+
+	private void initConnected()
+	{
+		Collection<node_data> s = _graph.getV();
+		for (node_data node : s) 
+		{
+			node.setTag(0);
+		}
+	}
+	private int numOfConected(node_data v)
+	{
+		if(v.getTag()==1) return 0;
+		v.setTag(1);
+		Collection<edge_data> e = _graph.getE(v.getKey());
+		int count =1;
+		for (edge_data edge : e)
+		{
+			count +=numOfConected(_graph.getNode(edge.getDest()));
+		}
+
+		return count;	
 	}
 
 	@Override
