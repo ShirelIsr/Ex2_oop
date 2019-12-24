@@ -5,8 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Set;
 
 import dataStructure.edge_data;
@@ -82,7 +85,7 @@ public class Graph_Algo implements graph_algorithms{
 		Collection<node_data> s = _graph.getV();
 		for (node_data node : s) 
 		{
-			initConnected();
+			clearNodeData();
 			if(_graph.nodeSize()>numOfConected(node))
 				return false;	
 		}
@@ -90,12 +93,13 @@ public class Graph_Algo implements graph_algorithms{
 		return true;
 	}
 
-	private void initConnected()
+	private void clearNodeData()
 	{
 		Collection<node_data> s = _graph.getV();
 		for (node_data node : s) 
 		{
 			node.setTag(0);
+			node.setWeight(Double.MAX_VALUE);
 		}
 	}
 	private int numOfConected(node_data v)
@@ -114,36 +118,54 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
-
-		return 0;
+		dijkstra(src);
+		return _graph.getNode(dest).getWeight();
 	}
-	private void dijkstra(int src)
-	{
-		_graph.getNode(src).setWeight(0);	
-		Collection<node_data> s = _graph.getV();
-		for (node_data node : s) 
+	 
+		private void dijkstra(int src)
 		{
-			double weightNode=node.getWeight();
-			node.setTag(1);
-			Collection<edge_data> e = _graph.getE(node.getKey());
-			for (edge_data edge : e)
-			{
-				double weightEdge=edge.getWeight();
-				if(_graph.getNode(edge.getDest()).getTag()!=1)
-					if(weightEdge+weightNode<_graph.getNode(edge.getDest()).getWeight())
-						_graph.getNode(edge.getDest()).setWeight(weightEdge+weightNode);
-				
+			clearNodeData();
+			PriorityQueue<node_data> queue = new PriorityQueue<node_data>();
+			_graph.getNode(src).setWeight(0);
+			queue.add(_graph.getNode(src));
+			while(!queue.isEmpty()){
+				node_data u = queue.poll();
+				Collection<edge_data> e = _graph.getE(u.getKey());
+				for(edge_data edge: e){
+					double weightNode=u.getWeight();
+					node_data v = _graph.getNode(edge.getDest());
+					double weightEdge=edge.getWeight();
+					//relax(u,v,weight)
+					//double distanceFromU = u.shortestDistance+weight;
+					if(_graph.getNode(edge.getDest()).getTag()!=1)
+						if(weightEdge+weightNode<_graph.getNode(edge.getDest()).getWeight()) 
+						{
+							queue.remove(v);
+							v.setWeight(weightEdge+weightNode);
+							/*remove v from queue for updating 
+							the shortestDistance value*/
+							v.setInfo(""+u.getKey());
+							queue.add(v);
+						}
+				}
 			}
-
 		}
-	}
+
+
 
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
-		_graph.getNode(src).setWeight(0);
-		
+		dijkstra(src);
+		List <node_data> path =new ArrayList <node_data>();
+		node_data node = _graph.getNode(dest);
+		while( node!=null){
+			path.add(node);
+			node=_graph.getNode(Integer.parseInt(node.getInfo()));
+		}
+		//reverse the order such that it will be from source to target
+		Collections.reverse(path);
 
-		return null;
+		return path;
 	}
 
 	@Override
