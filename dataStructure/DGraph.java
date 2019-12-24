@@ -2,6 +2,11 @@ package dataStructure;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 public class DGraph implements graph{
 
@@ -9,7 +14,7 @@ public class DGraph implements graph{
 	HashMap <Integer,node_data> _graph=new HashMap<Integer,node_data>();
 	private int countMc=0;
 	private int countE=0;
-	
+
 
 
 	@Override
@@ -29,6 +34,7 @@ public class DGraph implements graph{
 	@Override
 	public void addNode(node_data n) {
 		_graph.put(n.getKey(), n);
+		this.countMc++;
 	}
 
 	@Override
@@ -39,7 +45,9 @@ public class DGraph implements graph{
 		if((srcN ==null) || (destN ==null) ) throw new RuntimeException("ERR, src/dest doe'snt exiest ");
 		edge_data e=new EdgeData(srcN,destN,w);
 		edge.get(srcN).put(dest, e);
-		
+		this.countE++;
+		this.countMc++;
+
 
 	}
 
@@ -52,15 +60,23 @@ public class DGraph implements graph{
 	public Collection<edge_data> getE(int node_id) {
 		node_data key=_graph.get(node_id);
 		return edge.get(key).values();
+
 	}
 
 	@Override
 	public node_data removeNode(int key) {
 		node_data keyN=_graph.get(key);
 		if (keyN==null) return null;
-		edge.get(keyN).clear();
 		countMc++;
-		return null;
+		Set <node_data> help =edge.keySet();
+		for(node_data node:help)
+		{
+			edge.get(node).remove(key);
+			countE--;   
+		}
+		countE-=edge.get(keyN).size();
+		edge.remove(keyN);
+		return _graph.remove(key);
 	}
 
 	@Override
