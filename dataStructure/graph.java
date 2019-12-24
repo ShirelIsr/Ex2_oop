@@ -72,7 +72,7 @@ public interface graph {
 	 * @return
 	 */
 	public int nodeSize();
-	/** 
+	/**
 	 * return the number of edges (assume directional graph).
 	 * Note: this method should run in O(1) time.
 	 * @return
