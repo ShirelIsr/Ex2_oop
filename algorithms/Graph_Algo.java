@@ -30,12 +30,10 @@ public class Graph_Algo implements graph_algorithms{
 	@Override
 	public void init(graph g) {
 		this._graph=g;
-
 	}
 
 	@Override
 	public void init(String file_name) {
-
 		try
 		{    
 			FileInputStream file = new FileInputStream("file_name.txt"); 

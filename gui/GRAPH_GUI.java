@@ -26,23 +26,35 @@ import utils.Point3D;
 		
 		private void initGUI() 
 		{
-			this.setSize(500, 500);
+			this.setSize(800, 600);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
 			MenuBar menuBar = new MenuBar();
 			Menu menu = new Menu("Menu");
+			Menu test = new Menu("Test");
 			menuBar.add(menu);
+			menuBar.add(test);
 			this.setMenuBar(menuBar);
 			
-			MenuItem item1 = new MenuItem("save");
-			item1.addActionListener(this);
+			MenuItem save = new MenuItem("save");
+			save.addActionListener(this);
+			MenuItem load = new MenuItem("load");
+			load.addActionListener(this);
+			MenuItem isconnect = new MenuItem("isConnect");
+			isconnect.addActionListener(this);
+			MenuItem SP = new MenuItem("SP");
+			SP.addActionListener(this);
+			MenuItem SPD = new MenuItem("SPD");
+			SPD.addActionListener(this);
+			MenuItem TSP = new MenuItem("TSP");
+			TSP.addActionListener(this);
 			
-			MenuItem item2 = new MenuItem("Item 2");
-			item2.addActionListener(this);
-			
-			menu.add(item1);
-			menu.add(item2);
-			
+			menu.add(save);
+			menu.add(load);
+			test.add(isconnect);
+			test.add(SP);
+			test.add(SPD);
+			test.add(TSP);
 			this.addMouseListener(this);
 		}
 
@@ -65,10 +77,10 @@ import utils.Point3D;
 					
 					g.drawString("5", (int)((p.x()+prev.x())/2),(int)((p.y()+prev.y())/2));
 				}
-				
 				prev = p;
 			}
 		}
+		
 		@Override
 		public void keyTyped(KeyEvent e) {
 			// TODO Auto-generated method stub
@@ -132,6 +144,12 @@ import utils.Point3D;
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
+			
+		}
+		
+		public static void main(String[] args) {
+			GRAPH_GUI app = new GRAPH_GUI();
+			app.setVisible(true);
 			
 		}
 
