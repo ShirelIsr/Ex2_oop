@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -84,7 +83,7 @@ public class Graph_Algo implements graph_algorithms{
 		for (node_data node : s) 
 		{
 			initConnected();
-			if(_graph.edgeSize()!=numOfConected(node))
+			if(_graph.nodeSize()>numOfConected(node))
 				return false;	
 		}
 
@@ -115,13 +114,35 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
-		// TODO Auto-generated method stub
+
 		return 0;
+	}
+	private void dijkstra(int src)
+	{
+		_graph.getNode(src).setWeight(0);	
+		Collection<node_data> s = _graph.getV();
+		for (node_data node : s) 
+		{
+			double weightNode=node.getWeight();
+			node.setTag(1);
+			Collection<edge_data> e = _graph.getE(node.getKey());
+			for (edge_data edge : e)
+			{
+				double weightEdge=edge.getWeight();
+				if(_graph.getNode(edge.getDest()).getTag()!=1)
+					if(weightEdge+weightNode<_graph.getNode(edge.getDest()).getWeight())
+						_graph.getNode(edge.getDest()).setWeight(weightEdge+weightNode);
+				
+			}
+
+		}
 	}
 
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
-		// TODO Auto-generated method stub
+		_graph.getNode(src).setWeight(0);
+		
+
 		return null;
 	}
 
