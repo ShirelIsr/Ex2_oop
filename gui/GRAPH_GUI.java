@@ -12,6 +12,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.LinkedList;
 
 import javax.swing.JFrame;
 
@@ -19,6 +20,8 @@ import utils.Point3D;
 
 	public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseListener, MouseMotionListener, KeyListener
 	{
+		LinkedList<Point3D> points = new LinkedList<Point3D>();
+		
 		public GRAPH_GUI()
 		{
 			initGUI();

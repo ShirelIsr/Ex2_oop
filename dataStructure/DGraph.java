@@ -27,6 +27,7 @@ public class DGraph implements graph{
 	@Override
 	public void addNode(node_data n) {
 		_graph.put(n.getKey(), n);
+		edge.put(n,new HashMap<Integer, edge_data>());
 	}
 
 	@Override
