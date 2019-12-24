@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -121,35 +122,35 @@ public class Graph_Algo implements graph_algorithms{
 		dijkstra(src);
 		return _graph.getNode(dest).getWeight();
 	}
-	 
-		private void dijkstra(int src)
-		{
-			clearNodeData();
-			PriorityQueue<node_data> queue = new PriorityQueue<node_data>();
-			_graph.getNode(src).setWeight(0);
-			queue.add(_graph.getNode(src));
-			while(!queue.isEmpty()){
-				node_data u = queue.poll();
-				Collection<edge_data> e = _graph.getE(u.getKey());
-				for(edge_data edge: e){
-					double weightNode=u.getWeight();
-					node_data v = _graph.getNode(edge.getDest());
-					double weightEdge=edge.getWeight();
-					//relax(u,v,weight)
-					//double distanceFromU = u.shortestDistance+weight;
-					if(_graph.getNode(edge.getDest()).getTag()!=1)
-						if(weightEdge+weightNode<_graph.getNode(edge.getDest()).getWeight()) 
-						{
-							queue.remove(v);
-							v.setWeight(weightEdge+weightNode);
-							/*remove v from queue for updating 
+
+	private void dijkstra(int src)
+	{
+		clearNodeData();
+		PriorityQueue<node_data> queue = new PriorityQueue<node_data>();
+		_graph.getNode(src).setWeight(0);
+		queue.add(_graph.getNode(src));
+		while(!queue.isEmpty()){
+			node_data u = queue.poll();
+			Collection<edge_data> e = _graph.getE(u.getKey());
+			for(edge_data edge: e){
+				double weightNode=u.getWeight();
+				node_data v = _graph.getNode(edge.getDest());
+				double weightEdge=edge.getWeight();
+				//relax(u,v,weight)
+				//double distanceFromU = u.shortestDistance+weight;
+				if(_graph.getNode(edge.getDest()).getTag()!=1)
+					if(weightEdge+weightNode<_graph.getNode(edge.getDest()).getWeight()) 
+					{
+						queue.remove(v);
+						v.setWeight(weightEdge+weightNode);
+						/*remove v from queue for updating 
 							the shortestDistance value*/
-							v.setInfo(""+u.getKey());
-							queue.add(v);
-						}
-				}
+						v.setInfo(""+u.getKey());
+						queue.add(v);
+					}
 			}
 		}
+	}
 
 
 
@@ -164,14 +165,27 @@ public class Graph_Algo implements graph_algorithms{
 		}
 		//reverse the order such that it will be from source to target
 		Collections.reverse(path);
-
 		return path;
 	}
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
-		// TODO Auto-generated method stub
-		return null;
+
+		List <node_data> path =shortestPath(targets.get(0), targets.get(1));
+		int last_path=1;
+		for(int i=2;i<targets.size();i++)
+		{
+			if(!path.contains(_graph.getNode(targets.get(i))))
+			{
+				List <node_data> path_temp =shortestPath(targets.get(last_path),targets.get(i));
+				Iterator <node_data> it=path_temp.iterator();
+				while(it.hasNext())
+					path.add(it.next());
+				last_path=i;
+			}
+		}
+
+		return path;
 	}
 
 	@Override
