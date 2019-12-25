@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -131,7 +132,8 @@ public class Graph_Algo implements graph_algorithms{
 		while(!queue.isEmpty()){
 			node_data u = queue.poll();
 			Collection<edge_data> e = _graph.getE(u.getKey());
-			for(edge_data edge: e){
+			for(edge_data edge: e)
+			{
 				double weightNode=u.getWeight();
 				node_data v = _graph.getNode(edge.getDest());
 				double weightEdge=edge.getWeight();
@@ -203,4 +205,14 @@ public class Graph_Algo implements graph_algorithms{
 		return g;
 	}
 
+}
+class comp implements Comparator<node_data>
+{
+
+	@Override
+	public int compare(node_data o1, node_data o2) {
+		// TODO Aureturn 0;
+		return (int)(o1.getWeight() - o2.getWeight());
+	}
+	
 }
