@@ -14,16 +14,31 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.LinkedList;
+import javax.swing.JOptionPane;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import algorithms.Graph_Algo;
+import algorithms.graph_algorithms;
+import dataStructure.DGraph;
+import dataStructure.NodeData;
+import dataStructure.edge_data;
+import dataStructure.graph;
+import dataStructure.node_data;
 import utils.Point3D;
 
 	public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseListener, MouseMotionListener, KeyListener
 	{
-		LinkedList<Point3D> points = new LinkedList<Point3D>();
+		graph _graph;
+		
+		public GRAPH_GUI(graph g)
+		{
+			this._graph=g;
+			initGUI();
+		}
 		
 		public GRAPH_GUI()
 		{
@@ -32,7 +47,7 @@ import utils.Point3D;
 		
 		private void initGUI() 
 		{
-			this.setSize(800, 600);
+			this.setSize(1000, 1000);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
 			MenuBar menuBar = new MenuBar();
@@ -68,37 +83,30 @@ import utils.Point3D;
 		{
 			super.paint(g);
 			
-			Point3D prev = null;
-		
-			for (Point3D p : points) 
+			Collection<node_data> s =_graph.getV();
+			for (node_data node : s) 
 			{
-				g.setColor(Color.BLUE);
-				g.fillOval((int)p.x(), (int)p.y(), 10, 10);
-				
-				if(prev != null)
+				Point3D p=node.getLocation();
+				g.setColor(Color.RED);
+				g.fillOval(p.ix(),p.iy(),10,10);
+				g.drawString(""+node.getKey(), p.ix()+1, p.iy()+1);
+				Collection<edge_data> e =_graph.getE(node.getKey());
+				for(edge_data edge : e)
 				{
-					g.setColor(Color.RED);
-					g.drawLine((int)p.x(), (int)p.y(), 
-							(int)prev.x(), (int)prev.y());
+					g.setColor(Color.BLUE);
+					Point3D pE=_graph.getNode(edge.getDest()).getLocation();
 					
-					g.drawString("5", (int)((p.x()+prev.x())/2),(int)((p.y()+prev.y())/2));
+					g.drawLine(p.ix(), p.iy(), pE.ix(), pE.iy());
 				}
-				prev = p;
+					
+					
+					
+				
 			}
 		}
-		public static void save(String filename) {
-			if (filename == null) throw new IllegalArgumentException();
-			File file = new File(filename);
-			String suffix = filename.substring(filename.lastIndexOf('.') + 1);
-
-			// png files
-//			if ("png".equalsIgnoreCase(suffix)) {
-//				try {
-//					ImageIO.write(onscreenImage, suffix, file);
-//				}
-//				catch (IOException e) {
-//					e.printStackTrace();
-//				}
+		public static void save() 
+		{
+			
 			}
 		
 		@Override
@@ -163,13 +171,75 @@ import utils.Point3D;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			String str = e.getActionCommand();
+			switch (str)
+			{
+			case "save"     :save();
+			case "load"     :load();
+			case "isConnect":isConnect();
+			case "SP"       :SP();
+			case "SPD"      :SPD();
+			case "TSP"      :TSP();
+			}
 			
 		}
 		
+		private void TSP() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		private void SPD() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		private void SP() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		private void isConnect() {
+			graph_algorithms g = new Graph_Algo();
+			g.init(_graph);
+			boolean ans = g.isConnected();
+			if(ans)
+			{
+				 JOptionPane.showMessageDialog(null,"The graph is connected", "isConnected", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "The graph is not connected", "isConnected", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+
+		private void load() {
+			// TODO Auto-generated method stub
+			
+		}
+
 		public static void main(String[] args) {
-			GRAPH_GUI app = new GRAPH_GUI();
+			graph g=new DGraph();
+			int j=2;
+			for (int i=100;i<1000;i=i+50,j=j+50)
+			{
+				Point3D Location = new Point3D(i,j);
+				node_data node=new NodeData(i,Location);
+				g.addNode(node);
+			}
+			Collection<node_data> s = g.getV();
+			for (node_data node1 : s) 
+			{
+				for (node_data node2 : s) 
+				{
+					if(node1.getKey()!=node2.getKey())
+						g.connect(node1.getKey(), node2.getKey(), Double.MAX_VALUE);
+				}
+			}
+			GRAPH_GUI app = new GRAPH_GUI(g);
 			app.setVisible(true);
+	
+			
 			
 		}
 

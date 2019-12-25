@@ -2,7 +2,7 @@ package dataStructure;
 import java.awt.Color;
 import utils.Point3D;
 
-public class NodeData implements node_data,comperable<node_data>{ 
+public class NodeData implements node_data{ 
 	
 	int key;
 	Point3D location;

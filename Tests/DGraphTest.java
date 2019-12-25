@@ -15,30 +15,29 @@ import dataStructure.node_data;
 import utils.Point3D;
 
 class DGraphTest {
-	//
-	//	@Test
-	//	void testGetNode() {
-	//		
-	//		graph _graph=new DGraph();
-	//		int j=2;
-	//		for (int i=0;i<10;i++,j++)
-	//		{
-	//			Point3D Location = new Point3D(i,j);
-	//			node_data node=new NodeData(i,Location);
-	//			_graph.addNode(node);
-	//		}
-	//		Collection<node_data> s = _graph.getV();
-	//		for (node_data node1 : s) 
-	//		{
-	//			for (node_data node2 : s) 
-	//			{
-	//				if(node1.getKey()!=node2.getKey())
-	//					_graph.connect(node1.getKey(), node2.getKey(), Double.MAX_VALUE);
-	//			}
-	//		}
-	//		return _graph;
-	//		}
-	//	}
+
+	@Test
+	void testGetNode() {
+
+		graph _graph=new DGraph();
+		int j=2;
+		for (int i=0;i<10;i++,j++)
+		{
+			Point3D Location = new Point3D(i,j);
+			node_data node=new NodeData(i,Location);
+			_graph.addNode(node);
+		}
+		Collection<node_data> s = _graph.getV();
+		for (node_data node1 : s) 
+		{
+			for (node_data node2 : s) 
+			{
+				if(node1.getKey()!=node2.getKey())
+					_graph.connect(node1.getKey(), node2.getKey(), Double.MAX_VALUE);
+			}
+		}
+	}
+
 
 
 
