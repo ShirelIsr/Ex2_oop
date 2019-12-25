@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 
 import algorithms.Graph_Algo;
@@ -95,8 +96,11 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 			{
 				g.setColor(Color.BLUE);
 				Point3D pE=Gui_Graph.getNode(edge.getDest()).getLocation();
-
 				g.drawLine(p.ix(), p.iy(), pE.ix(), pE.iy());
+				g.drawString(""+edge.getWeight(), (int)((p.x()+pE.x())/2),(int)((p.y()+pE.y())/2));
+				g.setColor(Color.YELLOW);
+				g.fillOval((int)(p.x()+10),(int)(p.y()+10),10,10);
+			
 			}
 
 
@@ -138,6 +142,23 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 			}
 		}
 
+	}
+	public void SP() 
+	{
+	    String src=  JOptionPane.showInputDialog("Please input a starting point");
+	    String dst=  JOptionPane.showInputDialog("Please input a ending point");
+		graph_algorithms g = new Graph_Algo();
+		g.init(Gui_Graph);
+		g.shortestPath(Integer.parseInt(src),Integer.parseInt(dst));
+	}
+	public void SPD() 
+	{
+	    String src=  JOptionPane.showInputDialog("Please input a starting point");
+	    String dst=  JOptionPane.showInputDialog("Please input a ending point");
+		graph_algorithms g = new Graph_Algo();
+		g.init(Gui_Graph);
+		g.shortestPath(Integer.parseInt(src),Integer.parseInt(dst));
+		
 	}
 
 	@Override
@@ -208,7 +229,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		case "save":save();
 		case "load" :load();
 		//			case "isConnect":isConnect();
-		//			case "SP" : SP();
+				case "SP" : SP();
 		//			case "SPD" :SPD();
 		//			case "TSP" :TSP();
 		}
