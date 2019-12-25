@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
+import javax.swing.JOptionPane;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
@@ -221,44 +222,63 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		String str = e.getActionCommand();
-		switch (str)
-		{
-		case "save":save();
-		case "load" :load();
-		//			case "isConnect":isConnect();
-				case "SP" : SP();
-		//			case "SPD" :SPD();
-		//			case "TSP" :TSP();
-		}
 
-	}
-
-	public static void main(String[] args) {
-		graph g=new DGraph();
-		int j=2;
-		for (int i=100;i<1000;i=i+50,j=j+50)
-		{
-			Point3D Location = new Point3D(i,j);
-			node_data node=new NodeData(i,Location);
-			g.addNode(node);
-		}
-		Collection<node_data> s = g.getV();
-		for (node_data node1 : s) 
-		{
-			for (node_data node2 : s) 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String str = e.getActionCommand();
+			switch (str)
 			{
-				if(node1.getKey()!=node2.getKey())
-					g.connect(node1.getKey(), node2.getKey(), Double.MAX_VALUE);
+			case "save"     :save();
+			case "load"     :load();
+			case "isConnect":isConnect();
+			case "SP"       :SP();
+			case "SPD"      :SPD();
+			case "TSP"      :TSP();
+			}
+			
+		}
+		
+		private void TSP() {
+			// TODO Auto-generated method stub
+			
+		}
+
+
+
+		private void isConnect() {
+			graph_algorithms g = new Graph_Algo();
+			g.init(Gui_Graph);
+			boolean ans = g.isConnected();
+			if(ans)
+			{
+				 JOptionPane.showMessageDialog(null,"The graph is connected", "isConnected", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "The graph is not connected", "isConnected", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
-		GRAPH_GUI app = new GRAPH_GUI(g);
-		app.setVisible(true);
 
 
-
+		public static void main(String[] args) {
+			graph g=new DGraph();
+			int j=2;
+			for (int i=100;i<1000;i=i+50,j=j+50)
+			{
+				Point3D Location = new Point3D(i,j);
+				node_data node=new NodeData(i,Location);
+				g.addNode(node);
+			}
+			Collection<node_data> s = g.getV();
+			for (node_data node1 : s) 
+			{
+				for (node_data node2 : s) 
+				{
+					if(node1.getKey()!=node2.getKey())
+						g.connect(node1.getKey(), node2.getKey(), Double.MAX_VALUE);
+				}
+			}
+			GRAPH_GUI app = new GRAPH_GUI(g);
+			app.setVisible(true);
+		}
 	}
-
-}

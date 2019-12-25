@@ -28,7 +28,7 @@ class Graph_AlgoTest {
 	Collection<node_data> s = _graph.getV();
 	for (node_data node1 : s) 
 	{
-		for (node_data node2 : s) 
+		for (node_data node2 : s)
 		{
 			if(node1.getKey()!=node2.getKey())
 				_graph.connect(node1.getKey(), node2.getKey(), Double.MAX_VALUE);
