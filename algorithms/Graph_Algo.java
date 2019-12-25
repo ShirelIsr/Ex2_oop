@@ -125,7 +125,7 @@ public class Graph_Algo implements graph_algorithms{
 	private void dijkstra(int src)
 	{
 		clearNodeData();
-		PriorityQueue<node_data> queue = new PriorityQueue<node_data>();
+		PriorityQueue<node_data> queue = new PriorityQueue<>(new graph_cmp());
 		_graph.getNode(src).setWeight(0);
 		queue.add(_graph.getNode(src));
 		while(!queue.isEmpty()){
@@ -135,8 +135,6 @@ public class Graph_Algo implements graph_algorithms{
 				double weightNode=u.getWeight();
 				node_data v = _graph.getNode(edge.getDest());
 				double weightEdge=edge.getWeight();
-				//relax(u,v,weight)
-				//double distanceFromU = u.shortestDistance+weight;
 				if(_graph.getNode(edge.getDest()).getTag()!=1)
 					if(weightEdge+weightNode<_graph.getNode(edge.getDest()).getWeight()) 
 					{
@@ -204,3 +202,4 @@ public class Graph_Algo implements graph_algorithms{
 	}
 
 }
+
