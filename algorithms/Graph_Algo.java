@@ -131,7 +131,8 @@ public class Graph_Algo implements graph_algorithms{
 		while(!queue.isEmpty()){
 			node_data u = queue.poll();
 			Collection<edge_data> e = _graph.getE(u.getKey());
-			for(edge_data edge: e){
+			for(edge_data edge: e)
+			{
 				double weightNode=u.getWeight();
 				node_data v = _graph.getNode(edge.getDest());
 				double weightEdge=edge.getWeight();
