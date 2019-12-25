@@ -12,8 +12,11 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import utils.Point3D;
@@ -83,6 +86,20 @@ import utils.Point3D;
 				prev = p;
 			}
 		}
+		public static void save(String filename) {
+			if (filename == null) throw new IllegalArgumentException();
+			File file = new File(filename);
+			String suffix = filename.substring(filename.lastIndexOf('.') + 1);
+
+			// png files
+//			if ("png".equalsIgnoreCase(suffix)) {
+//				try {
+//					ImageIO.write(onscreenImage, suffix, file);
+//				}
+//				catch (IOException e) {
+//					e.printStackTrace();
+//				}
+			}
 		
 		@Override
 		public void keyTyped(KeyEvent e) {
