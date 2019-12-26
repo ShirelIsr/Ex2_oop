@@ -35,11 +35,9 @@ public class DGraph implements graph{
 		if(src == dest) throw new RuntimeException("ERR, src/dest doe'snt exiest ");
 		node_data srcN=_graph.get(src);
 		node_data destN=_graph.get(dest);
-		if((srcN ==null) || (destN ==null) ) throw new RuntimeException("ERR, src/dest doe'snt exiest ");
+		//if((srcN ==null) || (destN ==null) ) throw new RuntimeException("ERR, src/dest doe'snt exiest ");
 		edge_data e=new EdgeData(srcN,destN,w);
 		edge.get(srcN).put(dest, e);
-		
-
 	}
 
 	@Override
@@ -87,5 +85,4 @@ public class DGraph implements graph{
 	public int getMC() {
 		return this.countMc;
 	}
-
 }
