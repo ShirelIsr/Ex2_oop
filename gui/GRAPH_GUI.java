@@ -50,7 +50,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 
 	private void initGUI() 
 	{
-		this.setSize(1000, 1000);
+		this.setSize(1000, 800);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		MenuBar menuBar = new MenuBar();
@@ -101,7 +101,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 				g.drawString(""+edge.getWeight(), (int)((p.x()+pE.x())/2),(int)((p.y()+pE.y())/2));
 				g.setColor(Color.YELLOW);
 				g.fillOval((int)(p.x()+10),(int)(p.y()+10),10,10);
-			
+
 			}
 
 
@@ -146,20 +146,20 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 	}
 	public void SP() 
 	{
-	    String src=  JOptionPane.showInputDialog("Please input a starting point");
-	    String dst=  JOptionPane.showInputDialog("Please input a ending point");
+		String src=  JOptionPane.showInputDialog("Please input a starting point");
+		String dst=  JOptionPane.showInputDialog("Please input a ending point");
 		graph_algorithms g = new Graph_Algo();
 		g.init(Gui_Graph);
 		g.shortestPath(Integer.parseInt(src),Integer.parseInt(dst));
 	}
 	public void SPD() 
 	{
-	    String src=  JOptionPane.showInputDialog("Please input a starting point");
-	    String dst=  JOptionPane.showInputDialog("Please input a ending point");
+		String src=  JOptionPane.showInputDialog("Please input a starting point");
+		String dst=  JOptionPane.showInputDialog("Please input a ending point");
 		graph_algorithms g = new Graph_Algo();
 		g.init(Gui_Graph);
 		g.shortestPath(Integer.parseInt(src),Integer.parseInt(dst));
-		
+
 	}
 
 	@Override
@@ -223,62 +223,70 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 	}
 
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			String str = e.getActionCommand();
-			switch (str)
-			{
-			case "save"     :save();
-			case "load"     :load();
-			case "isConnect":isConnect();
-			case "SP"       :SP();
-			case "SPD"      :SPD();
-			case "TSP"      :TSP();
-			}
-			
-		}
-		
-		private void TSP() {
-			// TODO Auto-generated method stub
-			
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String str = e.getActionCommand();
+		switch (str)
+		{
+		case "save"     :save(); break;
+		case "load"     :load(); break;
+		case "isConnect":isConnect(); break;
+		case "SP"       :SP(); break;
+		case "SPD"      :SPD(); break;
+		case "TSP"      :TSP(); break;
 		}
 
+	}
+
+	private void TSP() {
+		// TODO Auto-generated method stub
+
+	}
 
 
-		private void isConnect() {
-			graph_algorithms g = new Graph_Algo();
-			g.init(Gui_Graph);
-			boolean ans = g.isConnected();
-			if(ans)
-			{
-				 JOptionPane.showMessageDialog(null,"The graph is connected", "isConnected", JOptionPane.INFORMATION_MESSAGE);
-			}
-			else
-			{
-				JOptionPane.showMessageDialog(null, "The graph is not connected", "isConnected", JOptionPane.INFORMATION_MESSAGE);
-			}
+
+	private void isConnect() {
+		graph_algorithms g = new Graph_Algo();
+		g.init(Gui_Graph);
+		boolean ans = g.isConnected();
+		if(ans)
+		{
+			JOptionPane.showMessageDialog(null,"The graph is connected", "isConnected", JOptionPane.INFORMATION_MESSAGE);
 		}
-
-
-		public static void main(String[] args) {
-			graph g=new DGraph();
-			int j=2;
-			for (int i=100;i<1000;i=i+50,j=j+50)
-			{
-				Point3D Location = new Point3D(i,j);
-				node_data node=new NodeData(i,Location);
-				g.addNode(node);
-			}
-			Collection<node_data> s = g.getV();
-			for (node_data node1 : s) 
-			{
-				for (node_data node2 : s) 
-				{
-					if(node1.getKey()!=node2.getKey())
-						g.connect(node1.getKey(), node2.getKey(), Double.MAX_VALUE);
-				}
-			}
-			GRAPH_GUI app = new GRAPH_GUI(g);
-			app.setVisible(true);
+		else
+		{
+			JOptionPane.showMessageDialog(null, "The graph is not connected", "isConnected", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
+
+
+	public static void main(String[] args) {
+		graph g=new DGraph();
+		graph t = new DGraph();
+		int l = 1;
+		for(int i=1; i<999;i+=25) {
+			l++;
+			Point3D loc = new Point3D(i*Math.random(),(int)i*Math.random());
+			node_data n = new NodeData(i,loc);
+			t.addNode(n);
+		}
+		int j=2;
+		for (int i=100;i<1000;i=i+50,j=j+50)
+		{
+			Point3D Location = new Point3D(i,j);
+			node_data node=new NodeData(i,Location);
+			g.addNode(node);
+		}
+		Collection<node_data> s = g.getV();
+		for (node_data node1 : s) 
+		{
+			for (node_data node2 : s) 
+			{
+				if(node1.getKey()!=node2.getKey())
+					g.connect(node1.getKey(), node2.getKey(), Double.MAX_VALUE);
+			}
+		}
+		GRAPH_GUI app = new GRAPH_GUI(t);
+		app.setVisible(true);
+	}
+}
