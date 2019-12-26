@@ -52,8 +52,36 @@ class Graph_AlgoTest {
 			_graph.connect(i, j, Double.MAX_VALUE);
 		}
 		return _graph;
+	}
+	
+	graph test3() {
+		graph g = new DGraph();
 		
-		
+		Point3D v1 = new Point3D(1,1);
+		Point3D v2 = new Point3D(1,4);
+		Point3D v3 = new Point3D(2,7);
+		Point3D v4 = new Point3D(4,3);
+		Point3D v5 = new Point3D(7,6);
+		Point3D v6 = new Point3D(10,4);
+		node_data n1=new NodeData(1,v1);
+		node_data n2=new NodeData(2,v2);
+		node_data n3=new NodeData(3,v3);
+		node_data n4=new NodeData(4,v4);
+		node_data n5=new NodeData(5,v5);
+		node_data n6=new NodeData(6,v6);
+		g.addNode(n1);
+		g.addNode(n2);
+		g.addNode(n3);
+		g.addNode(n4);
+		g.addNode(n5);
+		g.addNode(n6);
+		g.connect(n1.getKey(), n2.getKey(), Double.MAX_VALUE);
+		g.connect(n2.getKey(), n3.getKey(), Double.MAX_VALUE);
+		g.connect(n3.getKey(), n4.getKey(), Double.MAX_VALUE);
+		g.connect(n5.getKey(), n4.getKey(), Double.MAX_VALUE);
+		g.connect(n3.getKey(), n5.getKey(), Double.MAX_VALUE);
+		g.connect(n4.getKey(), n1.getKey(), Double.MAX_VALUE);
+		return g;
 	}
 	
 
@@ -77,11 +105,15 @@ class Graph_AlgoTest {
 
 	@Test
 	void testIsConnected() {
-		graph_algorithms test_graph= new Graph_Algo();
-		test_graph.init(test());
-		System.out.println(test_graph.isConnected());
-		test_graph.init(test2());
-		System.out.println(test_graph.isConnected());
+		//graph_algorithms test_graph= new Graph_Algo();
+		//test_graph.init(test());
+		//System.out.println(test_graph.isConnected());
+		//test_graph.init(test2());
+		graph_algorithms t2= new Graph_Algo();
+		t2.init(test3());
+		//Point3D v5 = new Point3D(1,1);
+		//Point3D v6 = new Point3D(1,1);
+		System.out.println(t2.isConnected());
 	}
 
 	@Test

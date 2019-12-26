@@ -84,13 +84,14 @@ public class Graph_Algo implements graph_algorithms{
 	public boolean isConnected() 
 	{
 		Collection<node_data> s = _graph.getV();
+		
 		for (node_data node : s) 
 		{
 			clearNodeData();
-			if(_graph.nodeSize()>numOfConected(node))
+			int c = numOfConected(node);
+			if(_graph.nodeSize()>c)
 				return false;	
 		}
-
 		return true;
 	}
 
@@ -111,9 +112,8 @@ public class Graph_Algo implements graph_algorithms{
 		int count =1;
 		for (edge_data edge : e)
 		{
-			count +=numOfConected(_graph.getNode(edge.getDest()));
+			count += numOfConected(_graph.getNode(edge.getDest()));
 		}
-
 		return count;	
 	}
 

@@ -14,8 +14,11 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import javax.imageio.ImageIO;
@@ -170,6 +173,24 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		}
 
 	}
+	public void TSP() 
+	{
+		List <node_data> pointsDatas =new ArrayList<node_data>();
+		String src=  JOptionPane.showInputDialog("Please input a starting point");
+		String dst=  JOptionPane.showInputDialog("Please input a ending point");
+		graph_algorithms g = new Graph_Algo();
+		g.init(Gui_Graph);
+		double ans =g.shortestPathDist(Integer.parseInt(src),Integer.parseInt(dst));
+		if(ans>0)
+		{
+			JOptionPane.showMessageDialog(null,"The shortest path dist is:", ""+ans, JOptionPane.INFORMATION_MESSAGE);
+		}
+		else 
+		{
+			JOptionPane.showMessageDialog(null,"Err, the point's is'nt exist :", "null", JOptionPane.INFORMATION_MESSAGE);	
+		}
+
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -201,36 +222,6 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -252,12 +243,6 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		}
 
 	}
-
-	private void TSP() {
-		// TODO Auto-generated method stub
-
-	}
-
 
 
 	private void isConnect() {
@@ -295,5 +280,35 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		}
 		GRAPH_GUI app = new GRAPH_GUI(g);
 		app.setVisible(true);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
