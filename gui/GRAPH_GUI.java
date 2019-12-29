@@ -87,7 +87,6 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-
 		Collection<node_data> s =Gui_Graph.getV();
 		for (node_data node : s) 
 		{
@@ -98,16 +97,22 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 			Collection<edge_data> e =Gui_Graph.getE(node.getKey());
 			for(edge_data edge : e)
 			{
-				g.setColor(Color.BLUE);
+				if(edge.getTag() ==999)
+				{
+					g.setColor(Color.GREEN);
+					edge.setTag(0);
+				}
+				else
+				{
+					g.setColor(Color.BLUE);
+				}
 				Point3D pE=Gui_Graph.getNode(edge.getDest()).getLocation();
 				g.drawLine(p.ix(), p.iy(), pE.ix(), pE.iy());
 				g.drawString(""+edge.getWeight(), (int)((p.x()+pE.x())/2),(int)((p.y()+pE.y())/2));
 				g.setColor(Color.YELLOW);
-				g.fillOval((int)(p.x()+10),(int)(p.y()+10),10,10);
+				g.fillOval((int)((p.x()+pE.x())/2),(int)((p.y()+pE.y())/2),10,10);
 
 			}
-
-
 		}
 	}
 	public void save() 
@@ -153,7 +158,20 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		String dst=  JOptionPane.showInputDialog("Please input a ending point");
 		graph_algorithms g = new Graph_Algo();
 		g.init(Gui_Graph);
-		g.shortestPath(Integer.parseInt(src),Integer.parseInt(dst));
+		List <node_data> ans=g.shortestPath(Integer.parseInt(src),Integer.parseInt(dst));
+		if(ans.isEmpty())
+		{
+			JOptionPane.showMessageDialog(null,"The shortest path dist is:", "Err", JOptionPane.INFORMATION_MESSAGE);
+		}
+		else 
+		{
+			int s=0;
+			for (int d=1;d<ans.size();d++,s++)
+			{
+				Gui_Graph.getEdge(ans.get(s).getKey(),ans.get(d).getKey()).setTag(999);
+			}
+		}
+		repaint();
 
 	}
 	public void SPD() 
@@ -165,7 +183,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		double ans =g.shortestPathDist(Integer.parseInt(src),Integer.parseInt(dst));
 		if(ans>0)
 		{
-			JOptionPane.showMessageDialog(null,"The shortest path dist is:", ""+ans, JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null,"The shortest path dist is:\n "+ans,"shortest path points "+src+"-"+dst, JOptionPane.INFORMATION_MESSAGE);
 		}
 		else 
 		{
@@ -175,19 +193,37 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 	}
 	public void TSP() 
 	{
-		List <node_data> pointsDatas =new ArrayList<node_data>();
-		String src=  JOptionPane.showInputDialog("Please input a starting point");
-		String dst=  JOptionPane.showInputDialog("Please input a ending point");
+		List <Integer> targets =new ArrayList<Integer>();
+		String input="";
+		input=  JOptionPane.showInputDialog("Please input the points \n to finsed enter done ");
+		while(!input.equalsIgnoreCase("done"))
+		{
+			input=  JOptionPane.showInputDialog("Please input the points \n to finsed enter done ");
+			try {
+				targets.add(Integer.parseInt(input));
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+
+		}
 		graph_algorithms g = new Graph_Algo();
 		g.init(Gui_Graph);
-		double ans =g.shortestPathDist(Integer.parseInt(src),Integer.parseInt(dst));
-		if(ans>0)
+		List <node_data> ans =g.TSP(targets);
+		if(ans.isEmpty())
 		{
-			JOptionPane.showMessageDialog(null,"The shortest path dist is:", ""+ans, JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null,"The shortest path dist is:", "Err", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else 
 		{
-			JOptionPane.showMessageDialog(null,"Err, the point's is'nt exist :", "null", JOptionPane.INFORMATION_MESSAGE);	
+			int src=0;
+			for (int dst=1;dst<ans.size();dst++,src++)
+			{
+				Gui_Graph.getEdge(ans.get(src).getKey(),ans.get(dst).getKey()).setTag(999);
+			}
+			repaint();
+
 		}
 
 	}
@@ -259,56 +295,53 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		}
 	}
 
-
-	public static void main(String[] args) {
-		graph g=new DGraph();
-		int j=2;
-		for (int i=100;i<1000;i=i+50,j=j+50)
-		{
-			Point3D Location = new Point3D(i,j);
-			node_data node=new NodeData(i,Location);
-			g.addNode(node);
-		}
-		Collection<node_data> s = g.getV();
-		for (node_data node1 : s) 
-		{
-			for (node_data node2 : s) 
-			{
-				if(node1.getKey()!=node2.getKey())
-					g.connect(node1.getKey(), node2.getKey(), Double.MAX_VALUE);
-			}
-		}
-		GRAPH_GUI app = new GRAPH_GUI(g);
-		app.setVisible(true);
-	}
-
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
+
+	}
+
+	public static void main(String[] args) {
+		graph g=new DGraph();
+		node_data v1=new NodeData(1,new Point3D(150,200));
+		g.addNode(v1);
+		node_data v2=new NodeData(2,new Point3D(200,200));
+		g.addNode(v2);
+		node_data v3=new NodeData(3,new Point3D(250,270));
+		node_data v4=new NodeData(4,new Point3D(220,270));
+		g.addNode(v4);
+		g.addNode(v3);
+		g.connect(1, 2, 5);
+		g.connect(1, 3, 2);
+		g.connect(3, 2,1);
+		g.connect(2, 3,1);
 		
+
+		GRAPH_GUI app = new GRAPH_GUI(g);
+		app.setVisible(true);
 	}
 }

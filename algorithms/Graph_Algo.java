@@ -159,6 +159,7 @@ public class Graph_Algo implements graph_algorithms{
 		node_data node = _graph.getNode(dest);
 		while( node!=null){
 			path.add(node);
+			//_graph.getEdge(node.getKey(), Integer.parseInt(node.getInfo())).setTag(1);
 			node=_graph.getNode(Integer.parseInt(node.getInfo()));
 		}
 		//reverse the order such that it will be from source to target
