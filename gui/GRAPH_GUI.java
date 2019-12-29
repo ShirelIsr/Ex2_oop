@@ -38,6 +38,10 @@ import utils.Point3D;
 
 public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseListener, MouseMotionListener, KeyListener
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	graph Gui_Graph;
 
 	public GRAPH_GUI(graph g)
@@ -118,13 +122,13 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 	public void save() 
 	{
 		graph_algorithms g = new Graph_Algo();
-		g.init(this.Gui_Graph);
+		g.init(Gui_Graph);
 		JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 		if(chooser.showOpenDialog(null)==JFileChooser.APPROVE_OPTION)
 		{
 			try
 			{
-				g.save(chooser.getSelectedFile()+".txt");
+				g.save(chooser.getSelectedFile()+"txt");
 			}
 			catch(Exception ex)
 			{
@@ -135,7 +139,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 	}
 	public void load() 
 	{
-		graph_algorithms g = new Graph_Algo();
+		Graph_Algo g = new Graph_Algo();
 		JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 		if(chooser.showOpenDialog(null)==JFileChooser.APPROVE_OPTION)
 		{
@@ -143,7 +147,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 			{
 				File SelectedFile=chooser.getSelectedFile();
 				g.init(SelectedFile.getAbsolutePath());
-				this.Gui_Graph=g.copy();
+				Gui_Graph=g.copy();
 			}
 			catch(Exception ex)
 			{
@@ -328,7 +332,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		g.addNode(v4);
 		g.addNode(v3);
 		g.connect(1, 2, 5);
-		g.connect(1, 3, 2);
+		//g.connect(1, 3, 2);
 		g.connect(3, 2,1);
 		g.connect(2, 3,1);
 

@@ -5,14 +5,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Set;
 
 import dataStructure.DGraph;
 import dataStructure.NodeData;
@@ -25,10 +24,19 @@ import dataStructure.node_data;
  * @author 
  *
  */
-public class Graph_Algo implements graph_algorithms {
+public class Graph_Algo implements graph_algorithms,Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	graph _graph;
 
+	public Graph_Algo ()
+	{
+		this._graph=new DGraph();
+	}
+	
 	@Override
 	public void init(graph g) {
 		this._graph=g;
@@ -40,12 +48,9 @@ public class Graph_Algo implements graph_algorithms {
 		{    
 			FileInputStream file = new FileInputStream("file_name.txt"); 
 			ObjectInputStream in = new ObjectInputStream(file); 
-
-			this._graph = (graph)in.readObject(); 
-
+			this._graph = (DGraph)in.readObject(); 
 			in.close(); 
 			file.close(); 
-
 			System.out.println("Object has been deserialized"); 
 		} 
 		catch(IOException ex) 
@@ -62,16 +67,13 @@ public class Graph_Algo implements graph_algorithms {
 	@Override
 	public void save(String file_name) {
 
-
 		try
 		{    
 			FileOutputStream file = new FileOutputStream(file_name); 
 			ObjectOutputStream out = new ObjectOutputStream(file); 
-
-			out.writeObject(this._graph); 
+			out.writeObject(this); 
 			out.close(); 
 			file.close(); 
-
 			System.out.println("Object has been serialized"); 
 		}   
 		catch(IOException ex) 

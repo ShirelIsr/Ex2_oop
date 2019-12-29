@@ -1,14 +1,29 @@
 package dataStructure;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class DGraph implements graph{
+public class DGraph implements graph ,Serializable{
+	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	HashMap <node_data, HashMap<Integer, edge_data>> edge =new HashMap <node_data, HashMap<Integer, edge_data>> ();
 	HashMap <Integer,node_data> _graph=new HashMap<Integer,node_data>();
 	private int countMc=0;
 	private int countE=0;
+	
+	public DGraph()
+	{
+		 edge =new HashMap <node_data, HashMap<Integer, edge_data>> ();
+		 _graph=new HashMap<Integer,node_data>();
+		 countMc=0;
+		 countE=0;
+		
+	}
 	
 	@Override
 	public node_data getNode(int key) {
