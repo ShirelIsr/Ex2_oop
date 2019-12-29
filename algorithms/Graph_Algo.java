@@ -15,6 +15,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import dataStructure.DGraph;
+import dataStructure.NodeData;
 import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
@@ -24,7 +25,7 @@ import dataStructure.node_data;
  * @author 
  *
  */
-public class Graph_Algo implements graph_algorithms{
+public class Graph_Algo implements graph_algorithms {
 
 	graph _graph;
 
@@ -183,7 +184,6 @@ public class Graph_Algo implements graph_algorithms{
 				last_path=i;
 			}
 		}
-
 		return path;
 	}
 
@@ -193,7 +193,7 @@ public class Graph_Algo implements graph_algorithms{
 		Collection <node_data> nodes = _graph.getV();
 		for(node_data node : nodes)
 		{
-			g.addNode(node);
+			g.addNode(new NodeData(node));
 			Collection<edge_data> edges = _graph.getE(node.getKey());
 			for(edge_data edge : edges)
 			{
@@ -202,5 +202,4 @@ public class Graph_Algo implements graph_algorithms{
 		}
 		return g;
 	}
-
 }

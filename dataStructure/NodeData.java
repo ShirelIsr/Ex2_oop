@@ -7,7 +7,7 @@ public class NodeData implements node_data{
 	int key;
 	Point3D location;
 	double weight;
-	int tag;
+	int tag = 0;
 	String info;
 	
 	public NodeData(int key,Point3D Location)
@@ -19,12 +19,19 @@ public class NodeData implements node_data{
 
 	}
 	
-	public NodeData(int key,Point3D Location,double weight)
+	public NodeData(int key,Point3D Location,double weight,int tag)
 	{
 		this.key=key;
 		this.location=Location;
 		this.weight= weight;
-		tag=0;
+		this.tag = tag;
+	}
+	
+	public NodeData(node_data node)
+	{
+		this(node.getKey(),node.getLocation(),node.getWeight(),node.getTag());
+		this.info = node.getInfo();
+
 	}
 
 

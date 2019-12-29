@@ -99,8 +99,6 @@ class Graph_AlgoTest {
 		graph _graph=test();
 		test_graph.init(_graph);	
 		test_graph.save("test");
-		
-		
 	}
 
 	@Test
@@ -109,7 +107,7 @@ class Graph_AlgoTest {
 		//test_graph.init(test());
 		//System.out.println(test_graph.isConnected());
 		//test_graph.init(test2());
-		graph_algorithms t2= new Graph_Algo();
+		graph_algorithms t2 = new Graph_Algo();
 		t2.init(test3());
 		//Point3D v5 = new Point3D(1,1);
 		//Point3D v6 = new Point3D(1,1);
@@ -133,7 +131,11 @@ class Graph_AlgoTest {
 
 	@Test
 	void testCopy() {
-		fail("Not yet implemented");
+		graph_algorithms g = new Graph_Algo();
+		graph c = new DGraph();
+		g.init(test3());
+		c = g.copy();
+		//fail("Not yet implemented");
 	}
 
 }
