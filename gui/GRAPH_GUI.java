@@ -159,17 +159,14 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		graph_algorithms g = new Graph_Algo();
 		g.init(Gui_Graph);
 		List <node_data> ans=g.shortestPath(Integer.parseInt(src),Integer.parseInt(dst));
-		if(ans.isEmpty())
+		if (ans ==null)
 		{
-			JOptionPane.showMessageDialog(null,"The shortest path dist is:", "Err", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Err, There is no path between the points :", "shortest path points \"+src+\"-\"+dst", JOptionPane.INFORMATION_MESSAGE);
 		}
-		else 
+		int s=0;
+		for (int d=1;d<ans.size();d++,s++)
 		{
-			int s=0;
-			for (int d=1;d<ans.size();d++,s++)
-			{
-				Gui_Graph.getEdge(ans.get(s).getKey(),ans.get(d).getKey()).setTag(999);
-			}
+			Gui_Graph.getEdge(ans.get(s).getKey(),ans.get(d).getKey()).setTag(999);
 		}
 		repaint();
 
@@ -181,24 +178,23 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		graph_algorithms g = new Graph_Algo();
 		g.init(Gui_Graph);
 		double ans =g.shortestPathDist(Integer.parseInt(src),Integer.parseInt(dst));
-		if(ans>0)
+		if(ans !=Double.MAX_VALUE)
 		{
 			JOptionPane.showMessageDialog(null,"The shortest path dist is:\n "+ans,"shortest path points "+src+"-"+dst, JOptionPane.INFORMATION_MESSAGE);
 		}
 		else 
 		{
-			JOptionPane.showMessageDialog(null,"Err, the point's is'nt exist :", "null", JOptionPane.INFORMATION_MESSAGE);	
+			JOptionPane.showMessageDialog(null,"Err, There is no path between the points :", "shortest path points \"+src+\"-\"+dst", JOptionPane.INFORMATION_MESSAGE);	
 		}
 
 	}
 	public void TSP() 
 	{
 		List <Integer> targets =new ArrayList<Integer>();
+		int repeat;
 		String input="";
-		input=  JOptionPane.showInputDialog("Please input the points \n to finsed enter done ");
-		while(!input.equalsIgnoreCase("done"))
-		{
-			input=  JOptionPane.showInputDialog("Please input the points \n to finsed enter done ");
+		do {
+			input=JOptionPane.showInputDialog("Please input the points \n ");
 			try {
 				targets.add(Integer.parseInt(input));
 			}
@@ -206,26 +202,22 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 			{
 				ex.printStackTrace();
 			}
+			repeat = JOptionPane.showConfirmDialog(null, "Press Yes to repeat, No to quit ", "please confirmm", JOptionPane.YES_NO_OPTION);
 
-		}
+		}while(repeat == JOptionPane.YES_OPTION);
 		graph_algorithms g = new Graph_Algo();
 		g.init(Gui_Graph);
 		List <node_data> ans =g.TSP(targets);
-		if(ans.isEmpty())
+		if (ans ==null)
 		{
-			JOptionPane.showMessageDialog(null,"The shortest path dist is:", "Err", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Err, There is no path between the points :", "shortest path points \"+src+\"-\"+dst", JOptionPane.INFORMATION_MESSAGE);
 		}
-		else 
+		int src=0;
+		for (int dst=1;dst<ans.size();dst++,src++)
 		{
-			int src=0;
-			for (int dst=1;dst<ans.size();dst++,src++)
-			{
-				Gui_Graph.getEdge(ans.get(src).getKey(),ans.get(dst).getKey()).setTag(999);
-			}
-			repaint();
-
+			Gui_Graph.getEdge(ans.get(src).getKey(),ans.get(dst).getKey()).setTag(999);
 		}
-
+		repaint();
 	}
 
 	@Override
@@ -339,7 +331,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		g.connect(1, 3, 2);
 		g.connect(3, 2,1);
 		g.connect(2, 3,1);
-		
+
 
 		GRAPH_GUI app = new GRAPH_GUI(g);
 		app.setVisible(true);

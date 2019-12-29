@@ -158,10 +158,12 @@ public class Graph_Algo implements graph_algorithms {
 		dijkstra(src);
 		List <node_data> path =new ArrayList <node_data>();
 		node_data node = _graph.getNode(dest);
-		while( node!=null){
-			path.add(node);
-			//_graph.getEdge(node.getKey(), Integer.parseInt(node.getInfo())).setTag(1);
+		path.add(node);
+		while( node.getKey()!=src){
+			if(node.getWeight()==Double.MAX_VALUE)
+				return null;
 			node=_graph.getNode(Integer.parseInt(node.getInfo()));
+			path.add(node);
 		}
 		//reverse the order such that it will be from source to target
 		Collections.reverse(path);
@@ -173,11 +175,15 @@ public class Graph_Algo implements graph_algorithms {
 
 		List <node_data> path =shortestPath(targets.get(0), targets.get(1));
 		int last_path=1;
+		if(path==null)
+			return null;
 		for(int i=2;i<targets.size();i++)
 		{
 			if(!path.contains(_graph.getNode(targets.get(i))))
 			{
 				List <node_data> path_temp =shortestPath(targets.get(last_path),targets.get(i));
+				if(path_temp==null)
+					return null;
 				Iterator <node_data> it=path_temp.iterator();
 				while(it.hasNext())
 					path.add(it.next());
