@@ -3,7 +3,7 @@ package dataStructure;
 import java.io.Serializable;
 
 public class EdgeData implements edge_data,Serializable{
-	
+
 	/**
 	 * 
 	 */
@@ -13,7 +13,7 @@ public class EdgeData implements edge_data,Serializable{
 	double weight;
 	int tag;
 	String info;
-	
+
 	public EdgeData(node_data src,node_data dest)
 	{
 		this.src=src;
@@ -25,7 +25,10 @@ public class EdgeData implements edge_data,Serializable{
 	{
 		this.src=src;
 		this.dest=dest;
-		this.weight=weight;
+		if(weight>=0)
+			this.weight=weight;
+		else
+			throw new RuntimeException("ERR, weught could not be negative ");
 		tag=0;
 	}
 

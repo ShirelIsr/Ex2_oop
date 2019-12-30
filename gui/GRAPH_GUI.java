@@ -186,7 +186,13 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		String src=  JOptionPane.showInputDialog("Please input the src");
 		String dst=  JOptionPane.showInputDialog("Please input the dest");
 		String w=  JOptionPane.showInputDialog("Please input the wahit");
+		
 		try {
+			if(Integer.parseInt(w)<0)
+				{
+				JOptionPane.showMessageDialog(null,"ERR, weight could not be negative ", "graph: ", JOptionPane.INFORMATION_MESSAGE);
+				return;
+				}
 			Gui_Graph.connect(Integer.parseInt(src), Integer.parseInt(dst), Integer.parseInt(w));
 		}
 		catch(Exception ex)
@@ -244,11 +250,11 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		double ans =g.shortestPathDist(Integer.parseInt(src),Integer.parseInt(dst));
 		if(ans !=Double.MAX_VALUE)
 		{
-			JOptionPane.showMessageDialog(null,"The shortest path dist is:\n "+ans,"shortest path points "+src+"-"+dst, JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null,"The shortest path dist is:\n "+ans,"shortest path", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else 
 		{
-			JOptionPane.showMessageDialog(null,"Err, There is no path between the points :", "shortest path points \"+src+\"-\"+dst", JOptionPane.INFORMATION_MESSAGE);	
+			JOptionPane.showMessageDialog(null,"The shortest path dist is:\n "+Double.POSITIVE_INFINITY, "shortest path:", JOptionPane.INFORMATION_MESSAGE);	
 		}
 
 	}
@@ -276,7 +282,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		List <node_data> ans =g.TSP(targets);
 		if (ans ==null)
 		{
-			JOptionPane.showMessageDialog(null,"Err, There is no path between the points :", "shortest path", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Err, There is no path between the points ", "shortest path", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		int src=0;

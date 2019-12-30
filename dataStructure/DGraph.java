@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public class DGraph implements graph ,Serializable{
-	
+
 
 	/**
 	 * 
@@ -15,16 +15,16 @@ public class DGraph implements graph ,Serializable{
 	HashMap <Integer,node_data> _graph=new HashMap<Integer,node_data>();
 	private int countMc=0;
 	private int countE=0;
-	
+
 	public DGraph()
 	{
-		 edge =new HashMap <node_data, HashMap<Integer, edge_data>> ();
-		 _graph=new HashMap<Integer,node_data>();
-		 countMc=0;
-		 countE=0;
-		
+		edge =new HashMap <node_data, HashMap<Integer, edge_data>> ();
+		_graph=new HashMap<Integer,node_data>();
+		countMc=0;
+		countE=0;
+
 	}
-	
+
 	@Override
 	public node_data getNode(int key) {
 		return  _graph.get(key);
@@ -49,6 +49,8 @@ public class DGraph implements graph ,Serializable{
 	@Override
 	public void connect(int src, int dest, double w) {
 		if(src == dest) throw new RuntimeException("ERR, src/dest doe'snt exiest ");
+		if(w<0)
+			throw new RuntimeException("ERR, weight could not be negative ");
 		node_data srcN=_graph.get(src);
 		node_data destN=_graph.get(dest);
 		if((srcN ==null) || (destN ==null) ) throw new RuntimeException("ERR, src/dest doe'snt exiest ");
@@ -56,7 +58,7 @@ public class DGraph implements graph ,Serializable{
 		edge.get(srcN).put(dest, e);
 		countMc++;
 		countE++;
-		
+
 	}
 
 	@Override
@@ -87,10 +89,10 @@ public class DGraph implements graph ,Serializable{
 		if((srcN ==null) || (destN ==null) ) return null;
 		edge_data ans=edge.get(srcN).remove(dest);
 		if(ans !=null)
-			{
+		{
 			countMc++;
 			countE--;
-			}
+		}
 		return ans;
 	}
 
