@@ -42,6 +42,7 @@ public class DGraph implements graph ,Serializable{
 	@Override
 	public void addNode(node_data n) {
 		_graph.put(n.getKey(), n);
+		countMc++;
 		edge.put(n,new HashMap<Integer, edge_data>());
 	}
 
@@ -53,6 +54,9 @@ public class DGraph implements graph ,Serializable{
 		if((srcN ==null) || (destN ==null) ) throw new RuntimeException("ERR, src/dest doe'snt exiest ");
 		edge_data e=new EdgeData(srcN,destN,w);
 		edge.get(srcN).put(dest, e);
+		countMc++;
+		countE++;
+		
 	}
 
 	@Override
@@ -70,7 +74,7 @@ public class DGraph implements graph ,Serializable{
 	public node_data removeNode(int key) {
 		node_data keyN=_graph.get(key);
 		if (keyN==null) return null;
-		
+		countE-=edge.get(keyN).size();
 		edge.get(keyN).clear();
 		countMc++;
 		return null;
@@ -81,8 +85,13 @@ public class DGraph implements graph ,Serializable{
 		node_data srcN=_graph.get(src);
 		node_data destN=_graph.get(dest);
 		if((srcN ==null) || (destN ==null) ) return null;
-		countMc++;
-		return edge.get(srcN).remove(dest);
+		edge_data ans=edge.get(srcN).remove(dest);
+		if(ans !=null)
+			{
+			countMc++;
+			countE--;
+			}
+		return ans;
 	}
 
 	@Override

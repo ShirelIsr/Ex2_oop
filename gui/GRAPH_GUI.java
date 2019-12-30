@@ -58,7 +58,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 
 	private void initGUI() 
 	{
-		setCanvasSize();
+		this.setSize(1000, 1000);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		MenuBar menuBar = new MenuBar();
@@ -81,6 +81,8 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		TSP.addActionListener(this);
 		MenuItem AddEdge = new MenuItem("AddEdge");
 		AddEdge.addActionListener(this);
+		MenuItem RemoveEdge = new MenuItem("RemoveEdge");
+		RemoveEdge.addActionListener(this);
 
 		menu.add(save);
 		menu.add(load);
@@ -89,6 +91,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		test.add(SPD);
 		test.add(TSP);
 		test.add(AddEdge);
+		test.add(RemoveEdge);
 		this.addMouseListener(this);
 	}
 
@@ -106,7 +109,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 			Collection<edge_data> e =Gui_Graph.getE(node.getKey());
 			for(edge_data edge : e)
 			{
-				if(edge.getTag() ==999)
+				if(edge.getTag() ==Double.MIN_EXPONENT)
 				{
 					g.setColor(Color.GREEN);
 					edge.setTag(0);
@@ -188,8 +191,27 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		}
 		catch(Exception ex)
 		{
+			JOptionPane.showMessageDialog(null,"Err,ther is src/dest do not exist", "graph: ", JOptionPane.INFORMATION_MESSAGE);
+			ex.printStackTrace();
+			return;
+		}
+		JOptionPane.showMessageDialog(null,"the new edge number:"+Gui_Graph.edgeSize(), "graph: ", JOptionPane.INFORMATION_MESSAGE);
+		repaint();
+	}
+	public void RemoveEdge()
+	{
+		String src=  JOptionPane.showInputDialog("Please input the src");
+		String dst=  JOptionPane.showInputDialog("Please input the dest");
+		edge_data ans=null;
+		try {
+		 ans=Gui_Graph.removeEdge(Integer.parseInt(src), Integer.parseInt(dst));
+		}
+		catch(Exception ex)
+		{
 			ex.printStackTrace();
 		}
+		if(ans!=null)
+			JOptionPane.showMessageDialog(null,"the new edge number:"+Gui_Graph.edgeSize(), "graph: ", JOptionPane.INFORMATION_MESSAGE);
 		repaint();
 	}
 
@@ -208,7 +230,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		int s=0;
 		for (int d=1;d<ans.size();d++,s++)
 		{
-			Gui_Graph.getEdge(ans.get(s).getKey(),ans.get(d).getKey()).setTag(999);
+			Gui_Graph.getEdge(ans.get(s).getKey(),ans.get(d).getKey()).setTag(Double.MIN_EXPONENT);
 		}
 		repaint();
 
@@ -242,7 +264,9 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 			}
 			catch(Exception ex)
 			{
+				JOptionPane.showMessageDialog(null,"","ERR", JOptionPane.INFORMATION_MESSAGE);
 				ex.printStackTrace();
+				return;
 			}
 			repeat = JOptionPane.showConfirmDialog(null, "Press Yes to repeat, No to quit ", "please confirmm", JOptionPane.YES_NO_OPTION);
 
@@ -252,14 +276,17 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		List <node_data> ans =g.TSP(targets);
 		if (ans ==null)
 		{
-			JOptionPane.showMessageDialog(null,"Err, There is no path between the points :", "shortest path points \"+src+\"-\"+dst", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null,"Err, There is no path between the points :", "shortest path", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		int src=0;
+		String pathAns=""+ans.get(src).getKey();
 		for (int dst=1;dst<ans.size();dst++,src++)
 		{
-			Gui_Graph.getEdge(ans.get(src).getKey(),ans.get(dst).getKey()).setTag(999);
+			Gui_Graph.getEdge(ans.get(src).getKey(),ans.get(dst).getKey()).setTag(Double.MIN_EXPONENT);
+			pathAns+="->"+ans.get(dst).getKey();
 		}
+		JOptionPane.showMessageDialog(null,pathAns,"the path is:", JOptionPane.INFORMATION_MESSAGE);
 		repaint();
 	}
 
@@ -313,6 +340,8 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		break;
 		case "AddEdge"      :addEdge();
 		break;
+		case "RemoveEdge"   :RemoveEdge();
+		break;
 		}
 
 	}
@@ -350,44 +379,24 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 
 	}
 
-	public void setCanvasSize()
-	{
-		Collection<node_data> s =Gui_Graph.getV();
-		int xi[]=new int[s.size()];
-		int yi[]=new int[s.size()];
-		int i=0;
-		for (node_data node : s) 
-		{
-			xi[i]=node.getLocation().ix();
-			yi[i]=node.getLocation().iy();
-			i++;
-		}
-		Arrays.sort(xi); 
-		Arrays.sort(yi); 
-		int x=(int) ((Math.abs(xi[0])+Math.abs(xi[s.size()-1])+200));
-		int y=(int) ((Math.abs(yi[0])+Math.abs(yi[s.size()-1])+200));
-		this.setSize(x, y);
-
-	}
 
 	public static void main(String[] args) {
 		graph g=new DGraph();
 
-		for (int i=1;i<11;i++)
+		for (int i=1;i<51;i++)
 		{
-			int ix=(int)(Math.random()*800);
-			int iy=(int)(Math.random()*800);
+			int ix=(int)(Math.random()*800)+100;
+			int iy=(int)(Math.random()*800)+100;
 			node_data v=new NodeData(i,new Point3D(ix,iy));
 			g.addNode(v);
 		}
-		for (int i=0;i<20;i++)
+		for (int i=0;i<50;i++)
 		{
-			int src=(int)(Math.random()*10+1);
+			int src=(int)(Math.random()*50+1);
 			int dst=1;
 			do {
-				dst=(int)(Math.random()*10+1);
+				dst=(int)(Math.random()*50+1);
 			}while(dst==src);	
-			System.out.println(src+"," +dst);
 			double w=Math.random()*100;
 			g.connect(src, dst, w);
 
