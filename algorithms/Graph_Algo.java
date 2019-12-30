@@ -45,10 +45,11 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 	@Override
 	public void init(String file_name) {
 		try
-		{    
-			FileInputStream file = new FileInputStream("file_name.txt"); 
+		{ 
+			FileInputStream file = new FileInputStream(file_name); 
 			ObjectInputStream in = new ObjectInputStream(file); 
-			this._graph = (DGraph)in.readObject(); 
+			Graph_Algo input =(Graph_Algo)in.readObject(); 
+			_graph = input._graph;
 			in.close(); 
 			file.close(); 
 			System.out.println("Object has been deserialized"); 
@@ -202,6 +203,9 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 		for(node_data node : nodes)
 		{
 			g.addNode(new NodeData(node));
+		}
+		for(node_data node : nodes)
+		{
 			Collection<edge_data> edges = _graph.getE(node.getKey());
 			for(edge_data edge : edges)
 			{

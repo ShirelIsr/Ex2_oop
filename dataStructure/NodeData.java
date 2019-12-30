@@ -1,9 +1,15 @@
 package dataStructure;
 import java.awt.Color;
+import java.io.Serializable;
+
 import utils.Point3D;
 
-public class NodeData implements node_data{ 
+public class NodeData implements node_data,Serializable{ 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	int key;
 	Point3D location;
 	double weight;
@@ -29,8 +35,11 @@ public class NodeData implements node_data{
 	
 	public NodeData(node_data node)
 	{
-		this(node.getKey(),node.getLocation(),node.getWeight(),node.getTag());
-		this.info = node.getInfo();
+		this.key=node.getKey();
+		this.location=node.getLocation();
+		this.weight=node.getWeight();
+		this.tag=node.getTag();
+		this.info=node.getInfo();
 
 	}
 

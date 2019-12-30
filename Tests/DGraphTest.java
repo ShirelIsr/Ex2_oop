@@ -17,6 +17,34 @@ import utils.Point3D;
 class DGraphTest {
 
 	@Test
+	void testDGraph()
+	{
+
+		graph g = new DGraph();
+
+		Point3D p1 = new Point3D(0,0);
+
+		for (int i = 1; i <= 1000000 ; i++) {
+			node_data t = new NodeData( i, new Point3D(p1.x()+i , p1.y()+i ,p1.z()+i ));
+			g.addNode(t);
+
+		}
+
+		for (int i = 1; i <= 1000000-10 ; i++) {
+			g.connect(i, i+1, i*0.5);
+			g.connect(i, i+2, i*0.3);
+			g.connect(i, i+3, 1);
+			g.connect(i, i+4, i*10);
+			g.connect(i, i+5, i*3);
+			g.connect(i, i+6, i*0.8);
+			g.connect(i, i+7, i*0.5);
+			g.connect(i, i+8, i*7);
+			g.connect(i, i+9, i*3);
+			g.connect(i, i+10, i*2.5);
+		}
+
+	}
+	@Test
 	void testGetNode() {
 
 		graph _graph=new DGraph();
