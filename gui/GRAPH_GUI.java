@@ -62,10 +62,10 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		MenuBar menuBar = new MenuBar();
-		Menu menu = new Menu("Menu");
-		Menu test = new Menu("Test");
-		menuBar.add(menu);
-		menuBar.add(test);
+		Menu file = new Menu("File");
+		Menu Graph_Menu = new Menu("Graph_Menu");
+		menuBar.add(file);
+		menuBar.add(Graph_Menu);
 		this.setMenuBar(menuBar);
 		MenuItem save = new MenuItem("save");
 		save.addActionListener(this);
@@ -84,14 +84,14 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		MenuItem RemoveEdge = new MenuItem("RemoveEdge");
 		RemoveEdge.addActionListener(this);
 
-		menu.add(save);
-		menu.add(load);
-		test.add(isconnect);
-		test.add(SP);
-		test.add(SPD);
-		test.add(TSP);
-		test.add(AddEdge);
-		test.add(RemoveEdge);
+		file.add(save);
+		file.add(load);
+		Graph_Menu.add(isconnect);
+		Graph_Menu.add(SP);
+		Graph_Menu.add(SPD);
+		Graph_Menu.add(TSP);
+		Graph_Menu.add(AddEdge);
+		Graph_Menu.add(RemoveEdge);
 		this.addMouseListener(this);
 	}
 
@@ -396,7 +396,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 			node_data v=new NodeData(i,new Point3D(ix,iy));
 			g.addNode(v);
 		}
-		for (int i=0;i<50;i++)
+		for (int i=0;i<80;i++)
 		{
 			int src=(int)(Math.random()*50+1);
 			int dst=1;

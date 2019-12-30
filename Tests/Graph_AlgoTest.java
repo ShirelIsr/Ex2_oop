@@ -2,7 +2,9 @@ package Tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +12,7 @@ import algorithms.Graph_Algo;
 import algorithms.graph_algorithms;
 import dataStructure.DGraph;
 import dataStructure.NodeData;
+import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
 import utils.Point3D;
@@ -17,24 +20,24 @@ import utils.Point3D;
 class Graph_AlgoTest {
 	graph test()
 	{
-	graph _graph=new DGraph();
-	int j=2;
-	for (int i=0;i<10;i++,j++)
-	{
-		Point3D Location = new Point3D(i,j);
-		node_data node=new NodeData(i,Location);
-		_graph.addNode(node);
-	}
-	Collection<node_data> s = _graph.getV();
-	for (node_data node1 : s) 
-	{
-		for (node_data node2 : s)
+		graph _graph=new DGraph();
+		int j=2;
+		for (int i=0;i<10;i++,j++)
 		{
-			if(node1.getKey()!=node2.getKey())
-				_graph.connect(node1.getKey(), node2.getKey(), Double.MAX_VALUE);
+			Point3D Location = new Point3D(i,j);
+			node_data node=new NodeData(i,Location);
+			_graph.addNode(node);
 		}
-	}
-	return _graph;
+		Collection<node_data> s = _graph.getV();
+		for (node_data node1 : s) 
+		{
+			for (node_data node2 : s)
+			{
+				if(node1.getKey()!=node2.getKey())
+					_graph.connect(node1.getKey(), node2.getKey(), Double.MAX_VALUE);
+			}
+		}
+		return _graph;
 	}
 	graph test2()
 	{
@@ -53,10 +56,10 @@ class Graph_AlgoTest {
 		}
 		return _graph;
 	}
-	
+
 	graph test3() {
 		graph g = new DGraph();
-		
+
 		Point3D v1 = new Point3D(1,1);
 		Point3D v2 = new Point3D(1,4);
 		Point3D v3 = new Point3D(2,7);
@@ -75,17 +78,27 @@ class Graph_AlgoTest {
 		g.addNode(n4);
 		g.addNode(n5);
 		g.addNode(n6);
-		g.connect(n1.getKey(), n2.getKey(), Double.MAX_VALUE);
-		g.connect(n2.getKey(), n3.getKey(), Double.MAX_VALUE);
-		g.connect(n3.getKey(), n4.getKey(), Double.MAX_VALUE);
-		g.connect(n5.getKey(), n4.getKey(), Double.MAX_VALUE);
-		g.connect(n3.getKey(), n5.getKey(), Double.MAX_VALUE);
-		g.connect(n4.getKey(), n1.getKey(), Double.MAX_VALUE);
+		Collection<node_data> s = g.getV();
+		for(node_data node1: s)
+		{
+			int w=2;
+			for(node_data node2: s)
+			{
+				if(node1.getKey()!= node2.getKey())
+				{
+					g.connect(node1.getKey(), node2.getKey(), w);
+				}
+				w++;
+			}
+
+
+		}
+
 		return g;
 	}
-	
 
-	
+
+
 
 	@Test
 	void testInitString() {
@@ -103,30 +116,36 @@ class Graph_AlgoTest {
 
 	@Test
 	void testIsConnected() {
-		//graph_algorithms test_graph= new Graph_Algo();
-		//test_graph.init(test());
-		//System.out.println(test_graph.isConnected());
-		//test_graph.init(test2());
 		graph_algorithms t2 = new Graph_Algo();
 		t2.init(test3());
-		//Point3D v5 = new Point3D(1,1);
-		//Point3D v6 = new Point3D(1,1);
 		System.out.println(t2.isConnected());
 	}
 
 	@Test
 	void testShortestPathDist() {
-		fail("Not yet implemented");
+		graph_algorithms t2 = new Graph_Algo();
+		t2.init(test3());
+		t2.shortestPath(1, 2);
 	}
 
 	@Test
 	void testShortestPath() {
-		fail("Not yet implemented");
+		graph_algorithms t2 = new Graph_Algo();
+		graph g=test3();
+		t2.init(g);
+		t2.shortestPath(1, 2);
 	}
 
 	@Test
 	void testTSP() {
-		fail("Not yet implemented");
+		graph_algorithms t2 = new Graph_Algo();
+		graph g=test3();
+		t2.init(g);
+		List <node_data> targets =new ArrayList<node_data>();
+		targets.add(g.getNode(1));
+		targets.add(g.getNode(3));
+		targets.add(g.getNode(4));
+		t2.shortestPath(1, 2);
 	}
 
 	@Test
