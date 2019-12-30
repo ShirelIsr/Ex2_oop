@@ -55,10 +55,10 @@ public class DGraph implements graph ,Serializable{
 		node_data destN=_graph.get(dest);
 		if((srcN ==null) || (destN ==null) ) throw new RuntimeException("ERR, src/dest doe'snt exiest ");
 		edge_data e=new EdgeData(srcN,destN,w);
+		if(!edge.get(srcN).containsKey(dest))
+			countE++;
 		edge.get(srcN).put(dest, e);
 		countMc++;
-		countE++;
-
 	}
 
 	@Override

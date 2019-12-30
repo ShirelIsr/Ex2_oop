@@ -67,4 +67,9 @@ public class EdgeData implements edge_data,Serializable{
 		this.tag = t;
 	}
 
+	public void setweight(double w) {
+		this.weight=w;
+	}
+
+
 }
