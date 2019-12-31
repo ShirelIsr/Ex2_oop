@@ -31,6 +31,11 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	graph _graph;
+	
+	public Graph_Algo(graph g)
+	{
+		this._graph=g;
+	}
 
 	public Graph_Algo ()
 	{

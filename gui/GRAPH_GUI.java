@@ -70,10 +70,10 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		MenuBar menuBar = new MenuBar();
 		Menu file = new Menu("File");
 		Menu Graph_Menu = new Menu("Graph_Menu");
-		Menu Test = new Menu("Test");
+		Menu Rnd_Graph = new Menu("Rnd_Graph");
 		menuBar.add(file);
 		menuBar.add(Graph_Menu);
-		menuBar.add(Test);
+		menuBar.add(Rnd_Graph);
 		this.setMenuBar(menuBar);
 		MenuItem save = new MenuItem("save");
 		save.addActionListener(this);
@@ -91,10 +91,10 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		AddEdge.addActionListener(this);
 		MenuItem RemoveEdge = new MenuItem("RemoveEdge");
 		RemoveEdge.addActionListener(this);
-		MenuItem Test1 = new MenuItem("Test1");
-		Test1.addActionListener(this);
-		MenuItem Test2 = new MenuItem("Test2");
-		Test2 .addActionListener(this);
+		MenuItem Rnd_Graph1 = new MenuItem("Rnd Graph ");
+		Rnd_Graph1.addActionListener(this);
+		MenuItem Rnd_Graph2 = new MenuItem("Rnd Graph Connect");
+		Rnd_Graph2 .addActionListener(this);
 
 		file.add(save);
 		file.add(load);
@@ -104,8 +104,8 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		Graph_Menu.add(TSP);
 		Graph_Menu.add(AddEdge);
 		Graph_Menu.add(RemoveEdge);
-		Test.add(Test1);
-		Test.add(Test2);
+		Rnd_Graph.add(Rnd_Graph1);
+		Rnd_Graph.add(Rnd_Graph2);
 		this.addMouseListener(this);
 	}
 
@@ -308,7 +308,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		JOptionPane.showMessageDialog(null,pathAns,"the path is:", JOptionPane.INFORMATION_MESSAGE);
 		repaint();
 	}
-	public void Test1() 
+	public void Rnd_Graph1() 
 	{
 		graph g=new DGraph();
 
@@ -334,7 +334,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		repaint();
 	}
 
-	public void Test2() 
+	public void Rnd_Graph2() 
 	{
 		graph g=new DGraph();
 
@@ -413,9 +413,9 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		break;
 		case "RemoveEdge"   :RemoveEdge();
 		break;
-		case "Test1"   :Test1();
+		case "Rnd Graph"   :Rnd_Graph1();
 		break;
-		case "Test2"   :Test2();
+		case "Rnd Graph Connect"   :Rnd_Graph2();
 		break;
 		}
 

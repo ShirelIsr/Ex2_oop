@@ -20,7 +20,6 @@ class DGraphTest {
 	@Test
 	void testDGraph()
 	{
-
 		graph g = new DGraph();
 
 		Point3D p1 = new Point3D(0,0);
