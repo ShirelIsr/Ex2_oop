@@ -56,16 +56,24 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		initGUI();
 	}
 
+	public void initGUI(graph g) 
+	{
+		this.Gui_Graph=g;
+		initGUI();
+	}
+
 	private void initGUI() 
 	{
-		this.setSize(1000, 1000);
+		this.setSize(900, 900);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		MenuBar menuBar = new MenuBar();
 		Menu file = new Menu("File");
 		Menu Graph_Menu = new Menu("Graph_Menu");
+		Menu Test = new Menu("Test");
 		menuBar.add(file);
 		menuBar.add(Graph_Menu);
+		menuBar.add(Test);
 		this.setMenuBar(menuBar);
 		MenuItem save = new MenuItem("save");
 		save.addActionListener(this);
@@ -83,6 +91,10 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		AddEdge.addActionListener(this);
 		MenuItem RemoveEdge = new MenuItem("RemoveEdge");
 		RemoveEdge.addActionListener(this);
+		MenuItem Test1 = new MenuItem("Test1");
+		Test1.addActionListener(this);
+		MenuItem Test2 = new MenuItem("Test2");
+		Test2 .addActionListener(this);
 
 		file.add(save);
 		file.add(load);
@@ -92,6 +104,8 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		Graph_Menu.add(TSP);
 		Graph_Menu.add(AddEdge);
 		Graph_Menu.add(RemoveEdge);
+		Test.add(Test1);
+		Test.add(Test2);
 		this.addMouseListener(this);
 	}
 
@@ -104,7 +118,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		{
 			Point3D p=node.getLocation();
 			g.setColor(Color.RED);
-			g.fillOval(p.ix(),p.iy(),10,10);
+			g.fillOval(p.ix(),p.iy(),12,12);
 			g.drawString(""+node.getKey(), p.ix()+1, p.iy()+1);
 			Collection<edge_data> e =Gui_Graph.getE(node.getKey());
 			for(edge_data edge : e)
@@ -186,13 +200,13 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		String src=  JOptionPane.showInputDialog("Please input the src");
 		String dst=  JOptionPane.showInputDialog("Please input the dest");
 		String w=  JOptionPane.showInputDialog("Please input the wahit");
-		
+
 		try {
 			if(Integer.parseInt(w)<0)
-				{
+			{
 				JOptionPane.showMessageDialog(null,"ERR, weight could not be negative ", "graph: ", JOptionPane.INFORMATION_MESSAGE);
 				return;
-				}
+			}
 			Gui_Graph.connect(Integer.parseInt(src), Integer.parseInt(dst), Integer.parseInt(w));
 		}
 		catch(Exception ex)
@@ -210,7 +224,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		String dst=  JOptionPane.showInputDialog("Please input the dest");
 		edge_data ans=null;
 		try {
-		 ans=Gui_Graph.removeEdge(Integer.parseInt(src), Integer.parseInt(dst));
+			ans=Gui_Graph.removeEdge(Integer.parseInt(src), Integer.parseInt(dst));
 		}
 		catch(Exception ex)
 		{
@@ -275,7 +289,6 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 				return;
 			}
 			repeat = JOptionPane.showConfirmDialog(null, "Press Yes to repeat, No to quit ", "please confirmm", JOptionPane.YES_NO_OPTION);
-
 		}while(repeat == JOptionPane.YES_OPTION);
 		graph_algorithms g = new Graph_Algo();
 		g.init(Gui_Graph);
@@ -293,6 +306,58 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 			pathAns+="->"+ans.get(dst).getKey();
 		}
 		JOptionPane.showMessageDialog(null,pathAns,"the path is:", JOptionPane.INFORMATION_MESSAGE);
+		repaint();
+	}
+	public void Test1() 
+	{
+		graph g=new DGraph();
+
+		for (int i=1;i<51;i++)
+		{
+			int ix=(int)(Math.random()*700)+100;
+			int iy=(int)(Math.random()*700)+100;
+			node_data v=new NodeData(i,new Point3D(ix,iy));
+			g.addNode(v);
+		}
+		for (int i=0;i<80;i++)
+		{
+			int src=(int)(Math.random()*50+1);
+			int dst=1;
+			do {
+				dst=(int)(Math.random()*50+1);
+			}while(dst==src);	
+			double w=Math.random()*100;
+			g.connect(src, dst, w);
+
+		}
+		this.Gui_Graph=g;
+		repaint();
+	}
+
+	public void Test2() 
+	{
+		graph g=new DGraph();
+
+		for (int i=0;i<10;i++)
+		{
+			int ix=(int)(Math.random()*700)+100;
+			int iy=(int)(Math.random()*700)+100;
+			node_data v=new NodeData(i,new Point3D(ix,iy));
+			g.addNode(v);
+		}
+		Collection<node_data> s = g.getV();
+		for (node_data node1 : s) 
+		{
+			for (node_data node2 : s)
+			{
+				if(node1.getKey()!=node2.getKey())
+				{
+					double w=Math.random()*100;
+					g.connect(node1.getKey(), node2.getKey(), w);
+				}
+			}
+		}
+		this.Gui_Graph=g;
 		repaint();
 	}
 
@@ -348,6 +413,10 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		break;
 		case "RemoveEdge"   :RemoveEdge();
 		break;
+		case "Test1"   :Test1();
+		break;
+		case "Test2"   :Test2();
+		break;
 		}
 
 	}
@@ -391,8 +460,8 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 
 		for (int i=1;i<51;i++)
 		{
-			int ix=(int)(Math.random()*800)+100;
-			int iy=(int)(Math.random()*800)+100;
+			int ix=(int)(Math.random()*700)+100;
+			int iy=(int)(Math.random()*700)+100;
 			node_data v=new NodeData(i,new Point3D(ix,iy));
 			g.addNode(v);
 		}

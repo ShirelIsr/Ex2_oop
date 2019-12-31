@@ -158,8 +158,8 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
-		dijkstra(src);
 		List <node_data> path =new ArrayList <node_data>();
+		dijkstra(src);
 		node_data node = _graph.getNode(dest);
 		path.add(node);
 		while( node.getKey()!=src){
@@ -176,22 +176,24 @@ public class Graph_Algo implements graph_algorithms,Serializable {
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
 
-		List <node_data> path =shortestPath(targets.get(0), targets.get(1));
+		List <node_data> path =shortestPath(targets.get(0),targets.get(1));
+		List<Integer> visit=new ArrayList<Integer>();
+		visit.add(targets.get(0));
+		visit.add(targets.get(1));
 		int last_path=1;
-		if(path==null)
-			return null;
 		for(int i=2;i<targets.size();i++)
 		{
-			if(!path.contains(_graph.getNode(targets.get(i))))
+			if((visit.contains(targets.get(i)))||!path.contains(_graph.getNode(targets.get(i))))
 			{
 				List <node_data> path_temp =shortestPath(targets.get(last_path),targets.get(i));
+				last_path=i;
 				if(path_temp==null)
 					return null;
-				Iterator <node_data> it=path_temp.iterator();
-				while(it.hasNext())
-					path.add(it.next());
-				last_path=i;
+				path_temp.remove(0);
+				for(node_data node:path_temp)
+					path.add(node);
 			}
+			visit.add(targets.get(i));
 		}
 		return path;
 	}
