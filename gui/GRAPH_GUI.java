@@ -91,7 +91,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 		AddEdge.addActionListener(this);
 		MenuItem RemoveEdge = new MenuItem("RemoveEdge");
 		RemoveEdge.addActionListener(this);
-		MenuItem Rnd_Graph1 = new MenuItem("Rnd Graph ");
+		MenuItem Rnd_Graph1 = new MenuItem("Rnd Graph");
 		Rnd_Graph1.addActionListener(this);
 		MenuItem Rnd_Graph2 = new MenuItem("Rnd Graph Connect");
 		Rnd_Graph2 .addActionListener(this);
