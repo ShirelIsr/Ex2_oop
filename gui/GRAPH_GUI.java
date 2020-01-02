@@ -112,6 +112,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 	public void paint(Graphics g)
 	{
 		super.paint(g);
+		if (Gui_Graph==null) return;
 		Collection<node_data> s =Gui_Graph.getV();
 
 		for (node_data node : s) 
