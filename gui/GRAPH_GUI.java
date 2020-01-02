@@ -457,29 +457,7 @@ public final class GRAPH_GUI  extends JFrame implements ActionListener, MouseLis
 
 
 	public static void main(String[] args) {
-		graph g=new DGraph();
-
-		for (int i=1;i<51;i++)
-		{
-			int ix=(int)(Math.random()*700)+100;
-			int iy=(int)(Math.random()*700)+100;
-			node_data v=new NodeData(i,new Point3D(ix,iy));
-			g.addNode(v);
-		}
-		for (int i=0;i<80;i++)
-		{
-			int src=(int)(Math.random()*50+1);
-			int dst=1;
-			do {
-				dst=(int)(Math.random()*50+1);
-			}while(dst==src);	
-			double w=Math.random()*100;
-			g.connect(src, dst, w);
-
-		}
-
-
-		GRAPH_GUI app = new GRAPH_GUI(g);
+		GRAPH_GUI app = new GRAPH_GUI();
 		app.setVisible(true);
 	}
 }
